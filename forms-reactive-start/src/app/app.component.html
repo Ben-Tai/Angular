@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!-- use databinding [formGroup] to attach the form to form controls and store -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div formGroupName="userData">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                class="form-control">
+                <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched">
+                  <span *ngIf="signupForm.get('userData.username').errors['nameAlreadyExists']">This name is already in use</span>
+                  <span *ngIf="signupForm.get('userData.username').errors['required']"> Please enter a valid username!</span>
+                  </span>
+              <div class="form-group">
+                <label for="email">email</label>
+                <input
+                type="text"
+                id="email"
+                formControlName="email"
+                class="form-control">
+                <span *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+                    please enter a valid email!</span>
+              </div>
+          </div>
+        </div>
+          <div class="radio" *ngFor="let gender of genders">
+            <label>
+              <input
+              type="radio"
+              formControlName="gender"
+              [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="hobbies">
+          <h5>Hobbies</h5>
+          <!-- create a method to dynamically add new form controls as a list of hobbies-->
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">Add hobby</button>
+          <!-- loop through hobbies array to create list and get index -->
+          <div class="form-group" *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index">
+            <!-- using property binding the formControlName will be the index from the hoobies array-->
+            <input type="text" class="form-control" [formControlName]='i'>
+          </div>
+        </div>
+            <span *ngIf="!signupForm.valid && signupForm.touched">
+                please answer all required fields</span>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="list-group">
+      <!-- use [routerLink] in square brackets to add an arrat of information into the path-->
+      <!-- use queryParams to add permissions to your route path -->
+      <!-- use fragments to add more information into your path -->
+      <a
+      [routerLink]="['/servers',server.id]"
+      [queryParams]="{allowEdit: server.id === 3 ? '1' : '0'}"
+      fragment = "loading"
+      class="list-group-item"
+      *ngFor="let server of servers">
+      {{ server.name }}
+    </a>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-4">
+  <!-- use router-outlet to load your components that have router links -->
+  <router-outlet></router-outlet>
+
+  <!-- no longer needed because we are now using router outlet to display the components
+  <app-edit-server></app-edit-server>
+  <hr>
+  <app-server></app-server> -->
+  </div>
+</div>
+
